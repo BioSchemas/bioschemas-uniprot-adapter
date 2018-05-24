@@ -3,13 +3,16 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 
 export default {
     input: 'src/index.js',
-    name: 'BioschemasUniProtAdapter',
-    sourcemap: true,
     output: {
         file: 'dist/BioschemasUniProtAdapter.js',
         format: 'iife',
+        name: 'BioschemasUniProtAdapter',
+        sourcemap: true,
+        globals: {
+            'protvista-uniprot-entry-adapter': 'ProtVistaUniProtEntryAdapter'
+        }
     },
-   // external: ['uniprot-entry-data-loader'],
+    external: ['protvista-uniprot-entry-adapter'],
     plugins: [
         nodeResolve({jsnext: true}),
         babel({
