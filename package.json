@@ -9,7 +9,8 @@
     "build": "rimraf ./dist && mkdirp ./dist && rollup -c",
     "rollup-watch": "rollup -cw",
     "browser-sync": "browser-sync start --server -f dist/**/*.*",
-    "serve": "npm run rollup-watch & npm run browser-sync"
+    "serve": "npm run rollup-watch & npm run browser-sync",
+    "npm-linkall": "npm link protvista-uniprot-entry-adapter data-loader"
   },
   "repository": {
     "type": "git",
@@ -38,5 +39,7 @@
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-node-resolve": "^3.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "lodash-es": "^4.17.4"
+  }
 }
