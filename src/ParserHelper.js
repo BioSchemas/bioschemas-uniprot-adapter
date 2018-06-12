@@ -3,6 +3,7 @@
 
 import _filter from 'lodash-es/filter';
 import _assign from 'lodash-es/assign';
+import _map from 'lodash-es/map';
 import {context} from './Context';
 
 export default class ParserHelper {
@@ -23,7 +24,7 @@ export default class ParserHelper {
     _adaptRecord() {
         this._adaptedData = _assign(this._adaptedData, {
             "@type": "DataRecord",
-            "@id": "http://www.identifiers.org/uniprot/" + this._entry.accession,
+            "@id": "http://www.identifiers.org/uniprot:" + this._entry.accession,
             "identifier": this._entry.accession,
             "url": "http://www.uniprot.org/uniprot/" + this._entry.accession,
             "dateCreated": this._entry.info.created,
@@ -33,11 +34,21 @@ export default class ParserHelper {
                 "@type": "DataDownload",
                 "url": "http://www.uniprot.org/uniprot/" + this._entry.accession + ".fasta"
             },
-
-            "seeAlso": [
-                "TODO PDBe"
-            ]
+            "sameAs": "http://purl.uniprot.org/uniprot/" + this._entry.accession
         });
+        //this._adaptStructures();
+    }
+
+    _adaptStructures() {
+        const structures = _filter(this._entry.dbReferences, (reference) => {
+            return reference.type === 'PDB';
+        });
+
+        if (structures && (structures.length !== 0)) {
+            this._adaptedData.seeAlso = _map(structures, (structure) => {
+                return `http://www.ebi.ac.uk/pdbe/entry/pdb/${structure.id}`;
+            });
+        }
     }
 
     _adaptMinimum() {
