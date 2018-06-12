@@ -24,17 +24,17 @@ export default class ParserHelper {
     _adaptRecord() {
         this._adaptedData = _assign(this._adaptedData, {
             "@type": "DataRecord",
-            "@id": "http://www.identifiers.org/uniprot:" + this._entry.accession,
+            "@id": `http://www.identifiers.org/uniprot:${this._entry.accession}`,
             "identifier": this._entry.accession,
-            "url": "http://www.uniprot.org/uniprot/" + this._entry.accession,
+            "url": `http://www.uniprot.org/uniprot/${this._entry.accession}`,
             "dateCreated": this._entry.info.created,
             "dateModified": this._entry.info.modified,
             "version": this._entry.info.version,
             "distribution": {
                 "@type": "DataDownload",
-                "url": "http://www.uniprot.org/uniprot/" + this._entry.accession + ".fasta"
+                "url": `http://www.uniprot.org/uniprot/${this._entry.accession}.fasta`
             },
-            "sameAs": "http://purl.uniprot.org/uniprot/" + this._entry.accession
+            "sameAs": `http://purl.uniprot.org/uniprot/${this._entry.accession}`
         });
         //this._adaptStructures();
     }
@@ -109,7 +109,7 @@ export default class ParserHelper {
                         "codeValue": disease.dbReference.id,
                         "codingSystem": "MIM"
                     },
-                    "sameAs": "http://purl.uniprot.org/mim/" + disease.dbReference.id
+                    "sameAs": `http://purl.uniprot.org/mim/${disease.dbReference.id}`
                 }
             });
         }
@@ -119,12 +119,12 @@ export default class ParserHelper {
         if (this._entry.organism) {
             const organism = {
                 "@type": "BioChemEntity",
-                "identifier": '' + this._entry.organism.taxonomy,
+                "identifier": `${this._entry.organism.taxonomy}`,
                 "categoryCode": {
-                    "codeValue": '' + this._entry.organism.taxonomy,
-                    "url": "http://purl.uniprot.org/taxonomy/" + this._entry.organism.taxonomy
+                    "codeValue": `${this._entry.organism.taxonomy}`,
+                    "url": `http://purl.uniprot.org/taxonomy/${this._entry.organism.taxonomy}`
                 },
-                "url": "http://www.uniprot.org/taxonomy/" + this._entry.organism.taxonomy
+                "url": `http://www.uniprot.org/taxonomy/${this._entry.organism.taxonomy}`
             };
             organism.name = this._entry.organism.names.map(name => name.value);
             this._adaptedData.mainEntity.isContainedIn = [organism];
