@@ -36,7 +36,7 @@ export default class ParserHelper {
             },
             "sameAs": `http://purl.uniprot.org/uniprot/${this._entry.accession}`
         });
-        //this._adaptStructures();
+        this._adaptStructures();
     }
 
     _adaptStructures() {
